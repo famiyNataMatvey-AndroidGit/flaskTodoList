@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="container">
+                <div class="header__row">
+                    <div class="header__title">
+                        Список задач
+                    </div>
+                </div>
+            </div>
+
+
+        </header>
+        <div class="content">
+            <div class="tasks_card">
+                <div class="container">
+                {% for index in range(task_length) %}
+                    <div class="tasks_card__row">
+                        {% set task = tasks[index] %}
+                        <div class="tasks_card__column">
+                            <div class="tasks_card__item">
+                                <label class="tasks_card__info" >
+                                    <a href="{{ url_for('complete_task', task_id=task.id) }}">
+                                        {{ task.name }}
+                                        <input type="checkbox" class="tasks_card__btn"/>
+                                    </a>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+
+            <div class="add_task">
+                <div class="container">
+                    <div class="add_task__row">
+                        <a href="#add_task_popup" class="add_task__btn">Новая задача</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="add_task_popup" class="popup">
+        <div class="popup__body">
+            <div class="popup__content">
+                <a href="#" class="popup__close">X</a>
+                <div class="popup__title">Добавить задачу</div>
+                <form action="{{url_for('create_task')}}" method="post" class="popup__row">
+                    <div class="item__label">Название задача:</div>
+                    {{ form.task_name(class="item__input") }}
+                    {% if form.task_name.errors %}
+                        {% for error in form.task_name.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.date(class="item__input", type="date") }}
+                    {% if form.task_name.errors %}
+                        {% for error in form.task_name.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    {% endif %}
+                    {{ form.submit(value='Добавить задачу', class='item__btn') }}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

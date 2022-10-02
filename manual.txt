@@ -1,0 +1,18 @@
+source venv/bin/activate
+pip install -r requirements.txt
+
+Установи mySql и создать базу данных
+https://pythonru.com/uroki/14-sozdanie-baz-dannyh-vo-flask
+
+Подключится к базе
+> mysql -u root -p
+> Password: test_password_for_db
+
+Создание базу:
+> CREATE DATABASE todolist_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+> \q
+
+
+https://flask-migrate.readthedocs.io/en/latest/
+flask db migrate -m "Initial migration."
+flask db upgrade
